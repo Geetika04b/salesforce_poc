@@ -1,0 +1,55 @@
+<template>
+
+    <lightning-card title="Currency Conversion">
+        <lightning-spinner if:true={showSpinner} class="slds-is-fixed" variant="brand" alternative-text="Loading"
+            size="large">
+        </lightning-spinner>
+        <lightning-layout multiple-rows>
+            <lightning-layout-item size="6" padding="around-small">
+                <lightning-input type="number" label="Please enter amount" formatter="currency"
+                    onchange={handleAmountChange}></lightning-input>
+            </lightning-layout-item><lightning-layout-item size="6" padding="around-small"></lightning-layout-item>
+            <lightning-layout-item size="6" padding="around-small" if:true={showConvertedAmt}>
+                <h1><b>Amount after Conversion:</b></h1>
+                <p>
+                    USD: {convertedAmountData.USD}
+                </p>
+                <p>
+                    EURO: {convertedAmountData.EUR}
+                </p>
+            </lightning-layout-item><lightning-layout-item size="6" padding="around-small"></lightning-layout-item>
+        </lightning-layout>
+        <h1 style="margin-left: 20px;"><b>Conversion histories</b></h1>
+        <lightning-layout multiple-rows>
+            <lightning-layout-item size="3" padding="around-small">
+                Amount to Convert
+            </lightning-layout-item>
+            <lightning-layout-item size="3" padding="around-small">
+                Currency to Convert
+            </lightning-layout-item>
+            <lightning-layout-item size="3" padding="around-small">
+              Converted Amount
+            </lightning-layout-item>
+            <lightning-layout-item size="3" padding="around-small">
+                Converted Currency
+            </lightning-layout-item>
+            <template for:each={records} for:item="history">
+                <lightning-layout-item size="3" padding="around-small" key={history.Id}>
+                    {history.Amount_to_convert__c}
+                </lightning-layout-item>
+                <lightning-layout-item size="3" padding="around-small" key={history.Id}>
+                    {history.Currency_to_Convert__c}
+                </lightning-layout-item>
+                <lightning-layout-item size="3" padding="around-small" key={history.Id}>
+                    {history.Converted_Amount__c}
+                </lightning-layout-item>
+                <lightning-layout-item size="3" padding="around-small" key={history.Id}>
+                    {history.Converted_Currency__c}
+                </lightning-layout-item>
+            </template>
+        </lightning-layout>
+        <p slot="footer">
+            <lightning-button label="Convert" onclick={handleConvert}></lightning-button>
+        </p>
+    </lightning-card>
+</template>
